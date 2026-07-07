@@ -1,7 +1,7 @@
 /* ============================================================
    MODO CLARO / OSCURO — JavaScript nativo
    Manipulación del DOM mediante classList
-   Fundamentos del Diseño Web · UPS 2026
+  
 
    ¿QUÉ SE HIZO PARA QUE FUNCIONE EN FIREFOX?
    ---------------------------------------------------------

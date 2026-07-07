@@ -1,5 +1,5 @@
 /* ============================================================
-   RAW STUDIO — CONTACTO.JS
+   CONTACTO.JS
    Controles de accesibilidad exclusivos del formulario de contacto:
    1) Mensaje de error puntual por campo cuando la validación nativa
       de HTML5 lo rechaza, para que una persona ciega sepa en qué

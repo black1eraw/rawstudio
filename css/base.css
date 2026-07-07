@@ -1,5 +1,5 @@
 /* ============================================================
-   RAW STUDIO — BASE.CSS
+   
    Estilos COMPARTIDOS por las 4 páginas: variables (modo claro/
    oscuro), reset, header, nav, botones, layout de página interna
    y footer. Se carga en index, quienes-somos, contacto y proyectos,
@@ -7,7 +7,7 @@
    ============================================================ */
 
 /* ------------------------------------------------------------
-   1. TOKENS — Custom Properties
+   
    Modo claro por defecto, modo oscuro sobreescribe en .dark-mode
    ------------------------------------------------------------ */
 :root { /* variables globales, disponibles en todo el documento */
