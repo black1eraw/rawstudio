@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"> <!-- codificación de caracteres, necesaria para tildes y ñ -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- obligatoria para que el sitio se vea estable en celulares y tablets -->
+  <meta name="description" content="Conocé a Raw Studio: un estudio de desarrollo web que prioriza la accesibilidad, el código nativo y los estándares W3C en cada proyecto."> <!-- descripción que usan los buscadores en los resultados -->
+  <meta name="robots" content="index, follow"> <!-- le dice a los buscadores que indexen esta página y sigan sus links -->
+  <meta name="keywords" content="estudio de desarrollo web,quienes somos,equipo,accesibilidad"> <!-- palabras clave asociadas a la página -->
+  <meta name="author" content="Raw Studio"> <!-- autor del documento -->
+  <title>Quiénes somos — Raw Studio</title> <!-- texto que aparece en la pestaña del navegador -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- precarga de conexión a Google Fonts, para que las fuentes externas carguen más rápido -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"> <!-- tipografías externas usadas en el sitio -->
+  <link rel="stylesheet" href="css/base.css"><!--Este css lo comparten todas las paginas para no repetir en cada pagina-->
+  <link rel="stylesheet" href="css/quienes-somos.css"> <!-- CSS exclusivo de esta página: tipografía del artículo y cita destacada -->
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a> <!-- accesibilidad: permite saltar el menú con teclado -->
+
+   <!-- HEADER: encabezado presente en las 4 páginas, con logo, navegación y botón de tema -->
+  <header class="site-header">
+  <div class="header-inner"> 
+    <!-- Esto es para tocar el logo y volverte a la pagina principal-->
+     <!-- El logo NO es un <h1>: cada página define su propio h1 más abajo -->
+    <a href="index.html" class="logo" aria-label="Raw Studio, inicio">R<span class="slash">/\</span>W<span class="cursor" aria-hidden="true"></span></a>
+
+      <!-- <nav> semántico con aria-label propio porque hay más de un <nav> en la página (este y el del footer) -->
+    <nav class="main-nav" aria-label="Navegación principal">
+      <ul> 
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="quienes-somos.html" aria-current="page">Quiénes somos</a></li><!-- aria-current="page": estamos parados en esta página -->
+        <li><a href="proyectos.html">Proyectos</a></li> 
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions"> <!-- contenedor del botón de tema, por si mañana se agrega algo más al lado -->
+        <!-- Botón de modo claro/oscuro. aria-pressed y aria-label los actualiza js/theme.js en cada click -->
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Cambiar a modo oscuro">
+        ☾ Modo oscuro
+      </button>
+    </div>
+  </div>
+</header>
+
+  <!-- Encabezado de página: título + bajada. Vive FUERA de <main> para que el <aside> de más abajo
+       pueda ser hijo directo del mismo grid que <main>, sin quedar anidado dentro del landmark principal
+       (el H1 sigue siendo el primer contenido tras el header, así que el skip-link no pierde nada). -->
+  <div class="page-hero" id="contenido">
+    <div class="page">
+      <p class="eyebrow">quiénes somos</p> <!-- etiqueta chica arriba del título -->
+      <!--Le dice al usuario en qué sección está sin necesidad de un encabezado adicional-->
+      <h1>Somos un estudio de desarrollo web, enfocado en lo esencial</h1>
+      <p class="lede">La historia de Raw Studio, cómo trabajamos y qué valoramos en cada sitio que entregamos.</p>
+       <!--lede actúa como un puente entre el título (H1) y el resto del contenido-->
+    </div>
+  </div>
+
+  <!-- .layout-grid: CSS Grid de 2 columnas. <main> y <aside> son hijos DIRECTOS de este grid,
+       así quedan lado a lado igual que antes, pero el <aside> ya no está anidado dentro de <main>. -->
+  <div class="page layout-grid">
+
+    <main>
+      <!-- <article>: el contenido es autónomo y tendría sentido incluso fuera de esta página (bio del estudio) -->
+      <article class="prose">
+        <p> <!-- primer párrafo: presentación del estudio -->
+          <!-- <strong> para dar peso semántico e importancia real al texto, no solo negrita visual -->
+          <strong>Raw Studio</strong> nació de una convicción sencilla: internet está lleno de herramientas 
+          complejas para problemas simples. Creemos que un gran sitio web no se construye acumulando capas 
+          innecesarias, sino pensando en el mensaje. Desde 2025, creamos experiencias digitales limpias, 
+          donde cada elemento tiene un propósito y la tecnología pasa desaparecida para dejar que tu proyecto brille.
+          </p>
+
+        <p> <!-- segundo párrafo: cómo describen su propio proceso de trabajo -->
+          Somos un taller, no una fábrica. Nuestro proceso es artesanal y pasa por tres momentos 
+          clave: primero, organizamos las ideas para que tu mensaje sea claro; luego, 
+          damos forma visual a esa estructura, guiando la mirada de quien nos visita; y finalmente, 
+          pulimos cada detalle hasta asegurar una calidad impecable y duradera.
+        </p>
+
+        <h2>Cómo trabajamos</h2> <!-- subtítulo de la segunda parte del artículo -->
+        <p>
+          <em>Nuestra forma de trabajar</em> <!-- <em> para dar énfasis semántico a la frase -->
+          Huimos de las plantillas y los moldes repetidos. Cada proyecto arranca con una hoja en 
+          blanco y una pregunta: ¿qué necesita entender tu visitante en los primeros tres segundos? 
+          A partir de ahí, diseñamos el camino. La inclusión no es un extra que añadimos al final; 
+          es nuestro cimiento. Creamos espacios digitales donde cualquier persona, sin importar cómo 
+          navegue o qué dispositivo use, puede llegar a su destino sin fricciones.
+        </p>
+
+        <!-- <blockquote> + <cite>: cita textual con su fuente. <cite> nombra la obra/fuente, no a una persona real -->
+        <blockquote>
+          Nos entregaron un sitio liviano, rápido y que funciona perfecto con el lector de
+          pantalla que usa nuestra administradora. Justo lo que pedimos.
+          <cite>Cooperativa Vecinal El Progreso</cite>
+        </blockquote>
+
+        <h2>Tipografía como herramienta</h2> <!-- subtítulo de la última parte del artículo -->
+        <p>
+          En este mismo párrafo usamos tres familias tipográficas con roles distintos:
+          <strong>Space Grotesk</strong> en los títulos, una geométrica de trazo firme que
+          da carácter a la marca; <strong>Source Serif 4</strong> en el cuerpo de texto,
+          una serif pensada para lectura larga con buen interlineado; y
+          <strong>JetBrains Mono</strong> en las etiquetas y metadatos, para reforzar la
+          idea de código crudo. El interlineado del cuerpo está fijado en
+          1.75 y el espaciado entre letras en los títulos técnicos usa
+          <code>letter-spacing</code> amplio, para que se lean como comentarios de código.
+        </p>
+      </article>
+    </main>
+
+    <!-- <aside>: contenido relacionado pero secundario respecto del artículo principal.
+         Hermano directo de <main> dentro del grid, y fuera del landmark <main>, como pide la consigna. -->
+    <aside aria-labelledby="stack-title">
+      <h2 id="stack-title">Stack</h2>
+
+      <ul class="tag-list"> <!-- lista de palabras clave del estudio, en Flexbox -->
+        <li>Pensamos</li>
+        <li>Creamos</li>
+        <li>Diseñamos</li>
+        <li>W3C válido</li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Footer idéntico al de las demás páginas -->
+  <footer class="site-footer">
+    <div class="footer-inner"> <!-- Flexbox: marca a la izquierda, navegación a la derecha -->
+      <div class="footer-brand"> <!-- logo chico + descripción corta del estudio -->
+        <p class="logo">R<span class="slash">/\</span>W</p>
+        <p>Desarrollo web</p>
+      </div>
+      <nav class="footer-nav" aria-label="Navegación del pie de página">
+        <div class="footer-col"> <!-- columna "Sitio", con los links a las 4 páginas -->
+          <h2>Sitio</h2>
+          <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="quienes-somos.html">Quiénes somos</a></li>
+            <li><a href="proyectos.html">Proyectos</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-col"> <!-- columna "Validación W3C", con los badges -->
+          <h2>Validación W3C</h2>
+          <div class="w3c-badges">
+            <a href="https://validator.w3.org/check?uri=referer" title="Validar HTML de esta página">
+              <img src="https://www.w3.org/Icons/valid-html401" alt="Válido HTML5" width="42" height="31">
+            </a>
+            <a href="https://jigsaw.w3.org/css-validator/check/referer" title="Validar CSS de esta página">
+              <img src="https://jigsaw.w3.org/css-validator/images/vcss" alt="CSS Válido" width="42" height="31">
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom"> <!-- franja final, debajo de la línea divisoria -->
+      <p>© 2026 Raw Studio.</p>
+
+    </div>
+  </footer>
+
+  <script src="js/theme.js"></script> <!-- se carga al final, después del contenido, no bloquea el renderizado -->
+</body>
+</html>

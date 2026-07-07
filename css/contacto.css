@@ -1,0 +1,194 @@
+/* ============================================================
+   RAW STUDIO — CONTACTO.CSS
+   Estilos exclusivos de contacto.html: formulario, fieldsets,
+   campos, validación visual y la lista del aside con los
+   datos de contacto.
+   Requiere que base.css esté cargado antes.
+   ============================================================ */
+
+.contact-form { /* la "tarjeta" que envuelve todo el formulario */
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 2rem; /* aire interno generoso alrededor de los campos */
+}
+
+fieldset { /* agrupador nativo de campos relacionados */
+  border: none; /* saca el borde gris feo que trae por defecto el navegador */
+  padding: 0; /* saca el padding por defecto */
+  margin: 0 0 2.2rem; /* separación respecto del siguiente fieldset */
+}
+
+fieldset legend { /* el título de cada grupo ("Datos de contacto", "Sobre tu proyecto") */
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: var(--ls-wide); /* letras separadas, mismo look que los "eyebrow" del resto del sitio */
+  color: var(--accent);
+  padding: 0; /* saca el padding por defecto del <legend> */
+  margin-bottom: 1.2rem;
+}
+
+fieldset legend::before {
+  content: "// "; /* agrega el "//" como si fuera un comentario de código, sin tocar el HTML */
+  color: var(--ink-soft); /* el "//" un poco más apagado que el texto de la leyenda */
+}
+
+/* Grid de 2 columnas para acomodar los campos del formulario en pares */
+.form-grid {
+  display: grid; /* activa CSS Grid */
+  grid-template-columns: repeat(2, 1fr); /* 2 columnas del mismo ancho, para poner campos en pares (ej. email + teléfono) */
+  gap: 1.3rem; /* separación entre campos, tanto horizontal como vertical */
+}
+
+/* .field.full hace que un campo ocupe las 2 columnas, como el mensaje */
+.field { /* contenedor de un campo individual: label + input + hint */
+  display: flex;
+  flex-direction: column; /* label arriba, input en el medio, hint abajo */
+  gap: 0.4rem; /* separación entre esos 3 elementos */
+}
+
+.field.full {
+  grid-column: 1 / -1; /* el campo ocupa desde la primera hasta la última columna del grid (las 2 juntas) */
+}
+
+.field label {
+  font-size: 0.9rem;
+  font-weight: 700; /* en negrita, para que se distinga claramente del texto de ayuda */
+}
+
+.field .hint { /* el texto de ayuda debajo de cada input */
+  font-size: 0.8rem; /* más chico que el label */
+  color: var(--ink-soft); /* apagado, es información secundaria */
+}
+
+.field input,
+.field textarea,
+.field select { /* estilo compartido por los 3 tipos de control de formulario */
+  font-family: var(--font-body); /* misma tipografía que el texto del sitio, no la de código */
+  font-size: 1rem;
+  padding: 0.75em 0.9em; /* área cómoda para escribir/tocar */
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg); /* usa el color de fondo general, no el de superficie, para que se note como "hueco" dentro de la tarjeta */
+  color: var(--ink);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease; /* anima el foco y la validación */
+}
+
+.field textarea {
+  resize: vertical; /* solo se puede agrandar hacia abajo, no a lo ancho (rompería el layout) */
+  min-height: 120px; /* alto mínimo, para que entre un mensaje razonable sin hacer scroll */
+}
+
+.field input:hover,
+.field textarea:hover {
+  border-color: var(--ink-soft); /* pista visual de que el campo es interactivo */
+}
+
+.field input:focus-visible,
+.field textarea:focus-visible,
+.field select:focus-visible { /* cuando el campo está activo (con el cursor adentro o enfocado por teclado) */
+  outline: none; /* saca el contorno azul por defecto del navegador... */
+  border-color: var(--accent); /* ...y lo reemplaza por el borde verde de marca */
+  box-shadow: 0 0 0 3px var(--accent-soft); /* halo suave alrededor, refuerza el foco sin ser agresivo */
+}
+
+.field input:invalid:not(:placeholder-shown),
+.field textarea:invalid:not(:placeholder-shown) {
+  /* :invalid = no cumple los atributos de validación (required, pattern, minlength, type)
+     :not(:placeholder-shown) = pero solo si el usuario ya escribió algo (si no, se ve el placeholder y no hay error todavía) */
+  border-color: var(--danger); /* borde rojo, avisa que hay un error */
+}
+
+.field input:valid:not(:placeholder-shown),
+.field textarea:valid:not(:placeholder-shown) {
+  border-color: var(--accent); /* borde verde, confirma que el campo está completo y es válido */
+}
+
+.field input:active,
+.field textarea:active {
+  transform: none; /* anula cualquier efecto de "click" heredado de otros elementos (ej. .btn) */
+}
+
+.form-actions { /* fila final con el botón de enviar y la aclaración de campos obligatorios */
+  display: flex;
+  align-items: center; /* centra el botón y el texto entre sí */
+  gap: 1.2rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap; /* en pantallas chicas, el texto puede bajar de línea */
+}
+
+.form-actions .btn-primary {
+  border: none; /* el botón de acento no necesita borde, ya tiene fondo sólido */
+  font-size: 0.95rem;
+}
+
+.required-note {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+/* Mensaje de error puntual por campo (lo completa js/contacto.js). Reutiliza --danger,
+   el mismo color que ya marca el borde inválido, así que no suma un color nuevo al sitio. */
+.field-error {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--danger);
+}
+
+.field-error:empty { /* sin error no ocupa espacio ni se nota que existe */
+  display: none;
+}
+
+/* Confirmación de envío (la completa js/contacto.js). Mismo recurso visual que <blockquote>
+   (borde izquierdo de acento) para no depender del color como único indicador de éxito. */
+.form-status {
+  margin-top: 1.2rem;
+  padding: 0.9em 1.1em;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft);
+  border-radius: 4px;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.form-status:empty {
+  display: none;
+  margin-top: 0;
+  padding: 0;
+}
+
+/* El navegador aplica cursiva a <address> por defecto: se anula para no alterar el diseño existente */
+address {
+  font-style: normal;
+}
+
+/* Lista de datos de contacto en el aside (exclusiva de esta página) */
+.aside-list {
+  display: flex;
+  flex-direction: column; /* cada dato (email, horario, etc.) en su propia línea */
+  gap: 0.6rem;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+.aside-list li {
+  padding-block: 0.4rem; /* aire arriba y abajo de cada línea */
+  border-bottom: 1px dashed var(--line); /* separador punteado entre cada dato */
+}
+
+.aside-list li:last-child {
+  border-bottom: none; /* el último dato no lleva línea divisoria abajo */
+}
+
+/* ------------------------------------------------------------
+   RESPONSIVE
+   ------------------------------------------------------------ */
+@media (max-width: 900px) { /* tablets y celulares */
+  .form-grid {
+    grid-template-columns: 1fr; /* de 2 columnas pasa a 1, todos los campos apilados */
+  }
+
+  .field.full {
+    grid-column: 1; /* con una sola columna ya no hace falta "abarcar 2 columnas", así que se ajusta a la única que hay */
+  }
+}

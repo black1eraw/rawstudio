@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"> <!-- codificación de caracteres, necesaria para tildes y ñ -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- obligatoria para que el sitio se vea estable en celulares y tablets -->
+  <meta name="description" content="Contactá a Raw Studio para tu próximo proyecto web: completá el formulario y te respondemos dentro de dos días hábiles."> <!-- descripción que usan los buscadores en los resultados -->
+  <meta name="robots" content="index, follow"> <!-- le dice a los buscadores que indexen esta página y sigan sus links -->
+  <meta name="keywords" content="contacto,presupuesto,formulario,desarrollo web"> <!-- palabras clave asociadas a la página -->
+  <meta name="author" content="Raw Studio"> <!-- autor del documento -->
+  <title>Contacto — Raw Studio</title> <!-- texto que aparece en la pestaña del navegador -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- precarga de conexión a Google Fonts, para que las fuentes externas carguen más rápido -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"> <!-- tipografías externas usadas en el sitio -->
+  <link rel="stylesheet" href="css/base.css"><!--Este css lo comparten todas las paginas para no repetir en cada pagina-->
+  <link rel="stylesheet" href="css/contacto.css"> <!-- CSS exclusivo de esta página: formulario, fieldsets y validación visual -->
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a> <!-- accesibilidad: permite saltar el menú con teclado -->
+
+  <!-- HEADER: encabezado presente en las 4 páginas, con logo, navegación y botón de tema -->
+  <header class="site-header">
+  <div class="header-inner"> 
+    <!-- Esto es para tocar el logo y volverte a la pagina principal-->
+     <!-- El logo NO es un <h1>: cada página define su propio h1 más abajo -->
+    <a href="index.html" class="logo" aria-label="Raw Studio, inicio">R<span class="slash">/\</span>W<span class="cursor" aria-hidden="true"></span></a>
+
+      <!-- <nav> semántico con aria-label propio porque hay más de un <nav> en la página (este y el del footer) -->
+    <nav class="main-nav" aria-label="Navegación principal">
+      <ul> 
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="quienes-somos.html">Quiénes somos</a></li>
+        <li><a href="proyectos.html">Proyectos</a></li>
+        <li><a href="contacto.html" aria-current="page">Contacto</a></li> <!-- aria-current="page": estamos parados en esta página -->
+      </ul>
+    </nav>
+
+    <div class="header-actions"> <!-- contenedor del botón de tema, por si mañana se agrega algo más al lado -->
+        <!-- Botón de modo claro/oscuro. aria-pressed y aria-label los actualiza js/theme.js en cada click -->
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Cambiar a modo oscuro">
+        ☾ Modo oscuro
+      </button>
+    </div>
+  </div>
+</header>
+  
+  <!-- Encabezado de página, fuera de <main> (ver nota en quienes-somos.html): así el <aside> de más
+       abajo puede ser hijo directo del mismo grid que <main>, sin quedar anidado dentro del landmark principal. -->
+  <div class="page-hero" id="contenido">
+    <div class="page">
+      <p class="eyebrow">contacto</p> <!-- etiqueta chica arriba del título -->
+      <h1 id="form-title">Contanos sobre tu proyecto</h1>
+      <p class="lede">Completá el formulario con el mayor detalle posible. Te respondemos dentro de dos días hábiles.</p>
+    </div>
+  </div>
+
+  <!-- Grid de 2 columnas: <main> (formulario) y <aside> (datos de contacto) son hijos directos de este grid -->
+  <div class="page layout-grid">
+
+    <main>
+      <section aria-label="Formulario de contacto">
+        <!--
+          <form>:
+          - action="#" method="post" -> valores de ejemplo, en un backend real apuntarían al endpoint que procesa el envío
+          - aria-labelledby="form-title" -> conecta el formulario con el <h1> de arriba, para que un lector de
+            pantalla anuncie "Contanos sobre tu proyecto, formulario" al entrar
+          - SIN novalidate: dejamos que el navegador dispare su validación nativa de HTML5 al enviar
+        -->
+        <form class="contact-form" action="#" method="post" aria-labelledby="form-title">
+
+          <!--
+            <fieldset> agrupa campos relacionados y <legend> los titula.
+            aria-describedby en el fieldset conecta todo el grupo con una aclaración general.
+          -->
+          <fieldset aria-describedby="datos-hint">
+            <legend>Datos de contacto</legend>
+            <p id="datos-hint" class="hint">Usamos esta información únicamente para responder tu consulta.</p>
+
+            <!-- .form-grid: CSS Grid de 2 columnas para acomodar los campos -->
+            <div class="form-grid">
+              <div class="field full"> <!-- .full: este campo ocupa las 2 columnas del grid -->
+                <!-- <label for="nombre"> vinculado por id al <input id="nombre">: así el click en el texto enfoca el campo -->
+                <label for="nombre">Nombre completo</label>
+                <input
+                  type="text"
+                  id="nombre"
+                  name="nombre"
+                  required
+                  minlength="2"
+                  maxlength="80"
+                  autocomplete="name"
+                  placeholder="Ej: Ana Pérez"
+                  aria-describedby="nombre-hint nombre-error">
+                <!-- aria-describedby: le dice al lector de pantalla que lea también esta ayuda al enfocar el campo -->
+                <span id="nombre-hint" class="hint">Nombre y apellido, tal como querés que te respondamos.</span>
+                <!-- Vacío por defecto: js/contacto.js escribe acá el motivo puntual cuando el campo queda inválido -->
+                <span id="nombre-error" class="field-error" aria-live="polite"></span>
+              </div>
+
+              <div class="field"> <!-- este campo ocupa 1 sola columna del grid -->
+                <label for="email">Correo electrónico</label>
+                <!-- type="email": el navegador valida automáticamente el formato de correo -->
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  maxlength="120"
+                  autocomplete="email"
+                  placeholder="ana@ejemplo.com"
+                  aria-describedby="email-hint email-error">
+                <span id="email-hint" class="hint">Formato: nombre@dominio.com</span>
+                <span id="email-error" class="field-error" aria-live="polite"></span>
+              </div>
+
+              <div class="field">
+                <label for="telefono">Teléfono</label>
+                <!--
+                  type="tel": teclado numérico en celulares
+                  pattern: expresión regular que permite números, espacios y el signo +, entre 6 y 20 caracteres
+                  no lleva "required" porque el teléfono es opcional
+                -->
+                <input
+                  type="tel"
+                  id="telefono"
+                  name="telefono"
+                  pattern="[0-9+ ]{6,20}"
+                  maxlength="20"
+                  autocomplete="tel"
+                  inputmode="tel"
+                  placeholder="+54 9 11 4000 0000"
+                  aria-describedby="telefono-hint telefono-error">
+                <span id="telefono-hint" class="hint">Opcional. Solo números, espacios y el signo +.</span>
+                <span id="telefono-error" class="field-error" aria-live="polite"></span>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset aria-describedby="proyecto-hint">
+            <legend>Sobre tu proyecto</legend>
+            <p id="proyecto-hint" class="hint">Contanos qué tipo de sitio necesitás y para qué lo vas a usar.</p>
+
+            <div class="form-grid">
+              <div class="field full">
+                <label for="tipo">Tipo de proyecto</label>
+                <!-- <select> con una opción deshabilitada como placeholder inicial -->
+                <select id="tipo" name="tipo" required aria-describedby="tipo-hint tipo-error">
+                  <option value="" selected disabled>Elegí una opción</option>
+                  <option value="institucional">Sitio institucional</option>
+                  <option value="formulario">Landing con formulario</option>
+                  <option value="portfolio">Galería o portfolio</option>
+                  <option value="otro">Otro</option>
+                </select>
+                <span id="tipo-hint" class="hint">Elegí la opción que más se acerque a lo que necesitás.</span>
+                <span id="tipo-error" class="field-error" aria-live="polite"></span>
+              </div>
+
+              <div class="field full">
+                <label for="mensaje">Mensaje</label>
+                <!-- minlength="20": exige un mínimo de contenido para evitar mensajes vacíos tipo "hola" -->
+                <textarea
+                  id="mensaje"
+                  name="mensaje"
+                  required
+                  minlength="20"
+                  maxlength="1000"
+                  placeholder="Contanos brevemente qué necesitás, para cuándo y con qué contenido contás..."
+                  aria-describedby="mensaje-hint mensaje-error"></textarea>
+                <span id="mensaje-hint" class="hint">Mínimo 20 caracteres. Cuanto más contexto nos des, mejor te podemos responder.</span>
+                <span id="mensaje-error" class="field-error" aria-live="polite"></span>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- .form-actions: Flexbox para alinear el botón y la aclaración en la misma fila -->
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+            <p class="required-note">Los campos marcados como obligatorios se validan antes de enviar.</p>
+          </div>
+
+          <!--
+            Región viva: arranca vacía (no ocupa espacio, ver .form-status:empty en contacto.css).
+            js/contacto.js escribe acá la confirmación cuando el envío es válido. role="status" + aria-live="polite"
+            hacen que un lector de pantalla la anuncie solo, sin que la persona tenga que ir a buscarla.
+            tabindex="-1": permite moverle el foco por JS al confirmar, sin agregarla al orden de tabulación normal.
+          -->
+          <p id="form-status" class="form-status" role="status" aria-live="polite" tabindex="-1"></p>
+        </form>
+      </section>
+    </main>
+
+    <!-- Hermano directo de <main> dentro del grid, y fuera del landmark <main>, como pide la consigna -->
+    <aside aria-labelledby="aside-contacto-title"> <!-- datos de contacto alternativos, como respaldo del formulario -->
+      <h2 id="aside-contacto-title">Otra forma de escribirnos</h2>
+      <!-- <address>: datos de contacto del sitio/autor, el uso exacto para el que existe esta etiqueta -->
+      <address>
+        <ul class="aside-list">
+          <li><strong>Email:</strong> hola@rawstudio.dev</li>
+          <li><strong>Horario:</strong> lunes a viernes, 9 a 18 h</li>
+          <li><strong>Zona horaria:</strong> Argentina (GMT-3)</li>
+          <li><strong>Respuesta:</strong> dentro de dos días hábiles</li>
+        </ul>
+      </address>
+    </aside>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner"> <!-- Flexbox: marca a la izquierda, navegación a la derecha -->
+      <div class="footer-brand"> <!-- logo chico + descripción corta del estudio -->
+        <p class="logo">R<span class="slash">/\</span>W</p>
+        <p>Desarrollo web.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Navegación del pie de página">
+        <div class="footer-col"> <!-- columna "Sitio", con los links a las 4 páginas -->
+          <h2>Sitio</h2>
+          <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="quienes-somos.html">Quiénes somos</a></li>
+            <li><a href="proyectos.html">Proyectos</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-col"> <!-- columna "Validación W3C", con los badges -->
+          <h2>Validación W3C</h2>
+          <div class="w3c-badges">
+            <a href="https://validator.w3.org/check?uri=referer" title="Validar HTML de esta página">
+              <img src="https://www.w3.org/Icons/valid-html401" alt="Válido HTML5" width="42" height="31">
+            </a>
+            <a href="https://jigsaw.w3.org/css-validator/check/referer" title="Validar CSS de esta página">
+              <img src="https://jigsaw.w3.org/css-validator/images/vcss" alt="CSS Válido" width="42" height="31">
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom"> <!-- franja final, debajo de la línea divisoria -->
+      <p>© 2026 Raw Studio.</p>
+      
+    </div>
+  </footer>
+
+  <script src="js/theme.js"></script> <!-- se carga al final, después del contenido, no bloquea el renderizado -->
+  <script src="js/contacto.js"></script> <!-- controles de accesibilidad del formulario: errores por campo y confirmación de envío -->
+</body>
+</html>

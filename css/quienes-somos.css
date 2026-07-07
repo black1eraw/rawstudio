@@ -1,0 +1,64 @@
+/* ============================================================
+   RAW STUDIO — QUIENES-SOMOS.CSS
+   Estilos exclusivos de quienes-somos.html: tipografía del
+   artículo, cita destacada (blockquote/cite).
+   Requiere que base.css esté cargado antes.
+   (El .tag-list del aside de esta página vive en base.css,
+   porque también lo usa proyectos.html)
+   ============================================================ */
+
+.prose { /* contenedor del artículo, define el "modo lectura" */
+  font-size: 1.08rem; /* un poco más grande que el body base, para lectura larga cómoda */
+  line-height: var(--lh-body); /* interlineado amplio (1.75), típico de textos largos */
+  letter-spacing: 0.01em; /* leve separación entre letras, mejora la legibilidad */
+  max-width: 68ch; /* corta el ancho del texto en ~68 caracteres por línea, el ideal para lectura */
+}
+
+.prose h2 { /* subtítulos dentro del artículo ("Cómo trabajamos", "Tipografía como herramienta") */
+  font-size: 1.4rem;
+  margin-top: 2em; /* bastante separación respecto del párrafo anterior, para cortar la sección */
+}
+
+.prose p {
+  margin-bottom: 1.4em; /* separación generosa entre párrafos, ritmo de lectura pausado */
+}
+
+.prose strong { /* texto en <strong>, con peso semántico real (no solo negrita visual) */
+  color: var(--ink); /* se asegura de usar el color de texto principal, no el heredado */
+  font-weight: 700;
+}
+
+.prose em { /* texto en <em>, énfasis semántico */
+  font-style: italic;
+  color: var(--ink-soft); /* un poco más apagado, para diferenciarlo visualmente del strong */
+}
+
+.prose mark { /* texto resaltado con <mark>, como un marcador fluorescente */
+  background: var(--accent-2-soft); /* fondo cálido y suave, no el verde de acento principal */
+  color: var(--ink);
+  padding: 0.05em 0.3em; /* aire mínimo alrededor del texto resaltado */
+  border-radius: 3px; /* esquinas levemente redondeadas, como un marcador real */
+}
+
+blockquote { /* cita destacada del cliente */
+  margin: 2em 0; /* separación arriba y abajo respecto del resto del texto */
+  padding: 0.4em 0 0.4em 1.4em; /* aire interno, más a la izquierda por el borde */
+  border-left: 3px solid var(--accent); /* barra verde vertical, marca visualmente que es una cita */
+  font-family: var(--font-display); /* tipografía de título, le da más peso a la cita */
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+blockquote cite { /* la fuente de la cita, debajo del texto citado */
+  display: block; /* la baja a su propia línea, en vez de quedar pegada al texto */
+  margin-top: 0.6em; /* separación respecto de la cita */
+  font-family: var(--font-mono); /* tipografía técnica, para diferenciarla del cuerpo de la cita */
+  font-style: normal; /* <cite> es itálica por defecto en los navegadores; se lo saca acá */
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+blockquote cite::before {
+  content: "— "; /* agrega el guion largo antes del nombre de la fuente, sin tocar el HTML */
+}

@@ -1,0 +1,229 @@
+/* ============================================================
+   RAW STUDIO — INDEX.CSS
+   Estilos exclusivos de index.html: hero, grid de servicios,
+   fila de features y banda final de CTA.
+   Requiere que base.css esté cargado antes (usa sus variables
+   y clases .page, .btn, etc.).
+   ============================================================ */
+
+/* Grid de una sola columna, ancho completo, sin aside (según consigna) */
+.home-grid {
+  display: grid; /* activa CSS Grid en este contenedor */
+  grid-template-columns: 1fr; /* una única columna que ocupa todo el ancho disponible */
+  gap: 5rem; /* separación vertical entre hero, servicios, features y CTA */
+  padding-block: 3rem 5rem; /* aire arriba y (más) abajo de todo el bloque */
+}
+
+/* ------------------------------------------------------------
+   HERO
+   ------------------------------------------------------------ */
+.hero {
+  display: grid; /* activa CSS Grid para acomodar texto + panel de código */
+  /* 2 columnas: texto un poco más ancho (1.15fr) que el panel de código (0.85fr) */
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 3rem; /* separación entre ambas columnas */
+  align-items: center; /* centra verticalmente el contenido de cada columna */
+}
+
+.hero-title {
+  font-size: clamp(2.4rem, 4.5vw, 3.6rem); /* tamaño fluido: mínimo 2.4rem, máximo 3.6rem, escala con el viewport */
+  letter-spacing: -0.01em; /* letras levemente más juntas, típico de títulos grandes */
+  line-height: 1.1; /* interlineado ajustado para que el título ocupe menos alto */
+}
+
+.hero-title .hl { /* la parte del título resaltada en verde ("sin intermediarios") */
+  color: var(--accent);
+  display: block; /* la fuerza a bajar a su propia línea */
+  margin-top: 0.15em; /* pequeño respiro respecto de la línea de arriba */
+}
+
+.hero-lede { /* párrafo de bajada debajo del título */
+  font-size: 1.15rem;
+  color: var(--ink-soft); /* más apagado que el título, para jerarquía visual */
+  max-width: 46ch; /* corta el ancho del párrafo en ~46 caracteres, para que no se estire de más */
+}
+
+.hero-actions { /* contenedor de los 2 botones del hero */
+  display: flex; /* los botones quedan en fila */
+  gap: 1rem; /* separación entre botones */
+  margin-top: 1.6rem; /* separación respecto del párrafo de arriba */
+  flex-wrap: wrap; /* si no entran en una fila, el segundo baja de línea */
+}
+
+.hero-panel { /* el panel decorativo con pinta de editor de código */
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.6rem;
+  font-family: var(--font-mono); /* tipografía de código para el contenido de adentro */
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+  box-shadow: var(--shadow); /* sombra para que se sienta "flotando" */
+}
+
+.hero-panel .dot-row { /* fila de los 3 puntitos, como los de una ventana de Mac */
+  display: flex;
+  gap: 6px; /* separación entre puntos */
+  margin-bottom: 1rem; /* separación respecto del código de abajo */
+}
+
+.hero-panel .dot { /* cada puntito individual */
+  width: 10px;
+  height: 10px;
+  border-radius: 50%; /* círculo perfecto */
+  background: var(--line);
+}
+
+.hero-panel pre { /* el bloque de código en sí */
+  margin: 0; /* saca el margen por defecto del <pre> */
+  white-space: pre-wrap; /* respeta los saltos de línea del código, pero permite que el texto haga wrap si hace falta */
+  line-height: 1.7; /* interlineado cómodo para leer código */
+}
+
+.hero-panel .tok-tag { color: var(--accent-2); } /* color simulado para las etiquetas HTML dentro del snippet */
+.hero-panel .tok-attr { color: var(--accent); } /* color simulado para atributos (class=...) */
+.hero-panel .tok-str { color: var(--ink-soft); } /* color simulado para el texto/contenido dentro del snippet */
+
+/* ------------------------------------------------------------
+   SECCIONES DE CONTENIDO
+   ------------------------------------------------------------ */
+.section-head { /* encabezado de cada sección (eyebrow + h2) */
+  max-width: 60ch; /* evita que el título se estire demasiado en pantallas anchas */
+  margin-bottom: 2.4rem; /* separación respecto del contenido de la sección */
+}
+
+.section-head h2 {
+  font-size: clamp(1.6rem, 3vw, 2.1rem); /* tamaño fluido según el ancho de pantalla */
+}
+
+/* servicios: grid de 3 columnas iguales */
+.services-grid {
+  display: grid; /* activa CSS Grid */
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas del mismo ancho */
+  gap: 1.5rem; /* separación entre tarjetas */
+}
+
+.service-card { /* cada tarjeta de servicio */
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.8rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; /* anima el hover */
+}
+
+.service-card:hover {
+  transform: translateY(-4px); /* se levanta un poco al pasar el mouse */
+  box-shadow: var(--shadow); /* aparece la sombra, refuerza el efecto de elevación */
+  border-color: var(--accent); /* el borde se pone verde */
+}
+
+.service-card .num { /* el numerito "01", "02", "03" */
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 0.85rem;
+}
+
+.service-card h3 {
+  font-size: 1.15rem;
+  margin: 0.6em 0 0.4em; /* separación arriba (del número) y abajo (del párrafo) */
+}
+
+.service-card p {
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  margin: 0; /* es el último elemento de la tarjeta, no necesita margen inferior */
+}
+
+/* por qué nosotros: Flexbox con wrap */
+.features-row {
+  display: flex; /* las 3 tarjetas quedan en fila */
+  flex-wrap: wrap; /* si no entran, la tercera baja de línea */
+  gap: 1.2rem; /* separación entre tarjetas */
+}
+
+.feature-pill { /* cada tarjeta de "por qué código nativo" */
+  flex: 1 1 240px; /* crece y encoge, pero nunca por debajo de 240px de ancho */
+  display: flex; /* ícono y texto quedan en fila dentro de la tarjeta */
+  gap: 0.9rem; /* separación entre ícono y texto */
+  align-items: flex-start; /* alinea el ícono con la primera línea del texto, no con el centro */
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.3rem;
+}
+
+.feature-pill .mark { /* el cuadradito con el rombo (◆) */
+  font-family: var(--font-mono);
+  color: var(--accent-ink); /* contraste correcto sobre el fondo verde */
+  background: var(--accent);
+  width: 2rem;
+  height: 2rem;
+  flex: none; /* no se achica ni se agranda, mantiene su tamaño fijo */
+  display: grid; /* para poder centrar el ícono adentro con place-items */
+  place-items: center; /* centra el símbolo horizontal y verticalmente */
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.feature-pill h3 {
+  font-size: 1rem;
+  margin: 0 0 0.3em;
+}
+
+.feature-pill p {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* CTA final */
+.cta-band { /* la franja oscura final con la llamada a la acción */
+  display: flex; /* título a un lado, botón al otro */
+  justify-content: space-between; /* los separa a los extremos */
+  align-items: center; /* centrados verticalmente entre sí */
+  gap: 2rem; /* separación mínima si el espacio es chico */
+  background: var(--ink); /* fondo oscuro fijo, contraste fuerte con el resto de la página clara */
+  color: var(--bg); /* texto claro, invertido respecto del resto del sitio */
+  border-radius: var(--radius);
+  padding: 2.4rem 2.6rem;
+  flex-wrap: wrap; /* en pantallas chicas, el botón puede bajar de línea */
+}
+
+body.dark-mode .cta-band { /* ajuste especial para cuando el sitio entero ya está en modo oscuro */
+  background: var(--surface-raised); /* en oscuro, esta franja ya no necesita ser "la más oscura" */
+  border: 1px solid var(--accent-soft); /* borde sutil para que no se pierda contra el fondo */
+}
+
+.cta-band h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: inherit; /* toma el color claro definido en .cta-band, no el color de texto general del sitio */
+}
+
+.cta-band .btn-primary {
+  flex: none; /* el botón no se estira ni se achica, mantiene su tamaño natural */
+}
+
+/* ------------------------------------------------------------
+   RESPONSIVE
+   ------------------------------------------------------------ */
+@media (max-width: 900px) { /* tablets */
+  .hero {
+    grid-template-columns: 1fr; /* el texto y el panel de código pasan a apilarse */
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr); /* de 3 columnas pasa a 2 */
+  }
+}
+
+@media (max-width: 640px) { /* celulares */
+  .services-grid {
+    grid-template-columns: 1fr; /* de 2 columnas pasa a 1, todo apilado */
+  }
+
+  .cta-band {
+    flex-direction: column; /* título y botón quedan uno arriba del otro */
+    text-align: center; /* centra el texto, se ve mejor apilado */
+  }
+}

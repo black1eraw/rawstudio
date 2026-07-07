@@ -1,0 +1,109 @@
+/* ============================================================
+   RAW STUDIO — PROYECTOS.CSS
+   Estilos exclusivos de proyectos.html: galería en Grid y las
+   cards con figure/figcaption y el efecto de zoom.
+   Requiere que base.css esté cargado antes.
+   (El .tag-list del aside de esta página vive en base.css,
+   porque también lo usa quienes-somos.html)
+   ============================================================ */
+
+.gallery-grid {
+  display: grid; /* activa CSS Grid para acomodar las cards */
+  grid-template-columns: repeat(2, 1fr); /* 2 columnas del mismo ancho */
+  gap: 1.6rem; /* separación entre cards, tanto horizontal como vertical */
+}
+
+.project-card { /* tarjeta contenedora de cada proyecto */
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden; /* recorta la imagen y la barra decorativa a las esquinas redondeadas */
+  transition: box-shadow 0.25s ease, border-color 0.25s ease; /* anima el hover */
+}
+
+.project-card:hover,
+.project-card:focus-within { /* :focus-within se activa si algo DENTRO de la card recibe foco (accesible por teclado) */
+  box-shadow: var(--shadow); /* aparece la sombra, sensación de elevación */
+  border-color: var(--accent); /* el borde se pone verde */
+}
+
+.project-card figure { /* el <figure> que envuelve la imagen */
+  margin: 0; /* saca el margen por defecto del <figure> */
+  overflow: hidden; /* recorta la imagen cuando hace zoom, para que no se salga de la card */
+  position: relative; /* referencia de posicionamiento por si hiciera falta (ej. la barra ::before) */
+}
+
+/* barra de "ventana de navegador" sobre la imagen */
+.project-card figure::before { /* pseudo-elemento: agrega la barra sin necesidad de un div extra en el HTML */
+  content: ""; /* obligatorio para que el pseudo-elemento se muestre, aunque no tenga texto */
+  display: block; /* para poder darle alto y que ocupe su propia franja */
+  height: 26px; /* alto de la barra superior, simulando la barra de un navegador */
+  background: var(--ink); /* fondo oscuro de la barra */
+  background-image: radial-gradient(circle 4px at 16px 13px, #ff6159 0, #ff6159 100%), /* círculo rojo, como el botón de cerrar */
+    radial-gradient(circle 4px at 32px 13px, #ffbd2e 0, #ffbd2e 100%), /* círculo amarillo, como el de minimizar */
+    radial-gradient(circle 4px at 48px 13px, #28c941 0, #28c941 100%); /* círculo verde, como el de maximizar */
+}
+
+.project-card img {
+  width: 100%; /* ocupa todo el ancho de la card */
+  height: auto; /* mantiene la proporción original de la imagen */
+  transform: scale(1); /* estado normal, tamaño real, sin zoom */
+  transition: transform 0.5s ease; /* anima el cambio de escala de forma suave */
+  display: block; /* saca el espacio fantasma que dejan las imágenes inline */
+}
+
+/* Al pasar el mouse (o enfocar la card con teclado) la imagen crece un 8% -> zoom suave */
+.project-card:hover img,
+.project-card:focus-within img {
+  transform: scale(1.08); /* agranda la imagen un 8%, recortada por el overflow:hidden del figure */
+}
+
+.project-card figcaption { /* el texto debajo de la imagen: título, descripción y stack */
+  padding: 1.2rem 1.4rem 1.5rem; /* aire interno, un poco más abajo que a los costados */
+}
+
+.project-card h3 {
+  font-size: 1.1rem;
+  margin: 0 0 0.3em; /* solo separación abajo, respecto del párrafo */
+}
+
+.project-card .stack { /* lista de tecnologías usadas en ese proyecto */
+  display: flex; /* los chips quedan en fila */
+  flex-wrap: wrap; /* si no entran todos, bajan de línea */
+  gap: 0.4rem; /* separación entre chips */
+  margin-top: 0.7rem; /* separación respecto del párrafo de arriba */
+}
+
+.project-card .stack li { /* cada chip individual (ej. "CSS Grid", "Flexbox") */
+  font-family: var(--font-mono); /* tipografía técnica, coherente con el resto de las etiquetas del sitio */
+  font-size: 0.74rem; /* chip bien chico */
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+  border-radius: 999px; /* forma de píldora */
+  padding: 0.2em 0.6em;
+}
+
+.project-card p { /* la descripción corta del proyecto */
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  margin: 0; /* sin margen, el espaciado ya lo da el padding del figcaption y el margin del h3 */
+}
+
+/* Texto y lista del aside "Sobre nuestros trabajos" (antes vivían como style="" inline) */
+.layout-grid > aside p {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+.layout-grid > aside .tag-list {
+  margin-top: 1rem;
+}
+
+/* ------------------------------------------------------------
+   RESPONSIVE
+   ------------------------------------------------------------ */
+@media (max-width: 900px) { /* tablets y celulares */
+  .gallery-grid {
+    grid-template-columns: 1fr; /* de 2 columnas pasa a 1, las cards quedan apiladas */
+  }
+}

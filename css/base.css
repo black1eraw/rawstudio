@@ -1,0 +1,511 @@
+/* ============================================================
+   RAW STUDIO — BASE.CSS
+   Estilos COMPARTIDOS por las 4 páginas: variables (modo claro/
+   oscuro), reset, header, nav, botones, layout de página interna
+   y footer. Se carga en index, quienes-somos, contacto y proyectos,
+   SIEMPRE antes que el CSS propio de cada página.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. TOKENS — Custom Properties
+   Modo claro por defecto, modo oscuro sobreescribe en .dark-mode
+   ------------------------------------------------------------ */
+:root { /* variables globales, disponibles en todo el documento */
+  --bg: #f6f4ef; /* color de fondo general del sitio (modo claro) */
+  --surface: #ffffff; /* color de fondo de tarjetas, inputs, header */
+  --surface-raised: #ffffff; /* fondo de elementos "elevados" (ej. cta-band en oscuro) */
+  --ink: #0c0c0f; /* color principal de texto */
+  --ink-soft: #4b4b52; /* color de texto secundario/atenuado */
+  --line: #ddd9cd; /* color de bordes y separadores */
+
+  --accent: #12b558; /* verde de marca: links activos, botones, cursor */
+  --accent-ink: #0c0c0f; /* color de texto que va SOBRE el acento (contraste) */
+  --accent-soft: rgba(18, 181, 88, 0.12); /* versión translúcida del acento, para fondos suaves */
+
+  --accent-2: #b9790f; /* acento secundario: mark, detalles cálidos */
+  --accent-2-soft: rgba(185, 121, 15, 0.14); /* versión translúcida del acento secundario */
+
+  --danger: #b3261e; /* color de error (bordes de input inválido) */
+  --danger-soft: rgba(179, 38, 30, 0.1); /* versión translúcida del color de error */
+
+  --font-display: "Space Grotesk", "Arial Narrow", sans-serif; /* fuente de títulos, con fallback de sistema */
+  --font-body: "Source Serif 4", Georgia, "Times New Roman", serif; /* fuente de párrafos, con fallback de sistema */
+  --font-mono: "JetBrains Mono", ui-monospace, "Courier New", monospace; /* fuente de etiquetas/código, con fallback de sistema */
+
+  --lh-tight: 1.15; /* interlineado ajustado, para títulos grandes */
+  --lh-body: 1.75; /* interlineado amplio, para párrafos largos */
+  --ls-wide: 0.08em; /* espaciado entre letras, para textos tipo etiqueta */
+
+  --radius: 10px; /* radio de borde estándar de tarjetas y botones */
+  --shadow: 0 18px 40px -20px rgba(12, 12, 15, 0.35); /* sombra suave estándar */
+  --content-max: 1180px; /* ancho máximo del contenido centrado */
+
+  color-scheme: light; /* le avisa al navegador que esta página es de tema claro (afecta scrollbars, controles nativos) */
+}
+
+body.dark-mode { /* mismas variables de arriba, pero con los valores del tema oscuro */
+  --bg: #0c0c0f; /* fondo casi negro */
+  --surface: #16161b; /* superficie de tarjetas un poco más clara que el fondo */
+  --surface-raised: #1b1b21; /* superficie elevada, aún más clara */
+  --ink: #f3f2ec; /* texto principal casi blanco */
+  --ink-soft: #a9a9b3; /* texto secundario gris claro */
+  --line: #2b2b32; /* bordes sutiles sobre fondo oscuro */
+
+  --accent: #1ee56e; /* verde más brillante, para que resalte sobre fondo oscuro */
+  --accent-ink: #0c0c0f; /* texto oscuro sobre el verde (mismo contraste que en claro) */
+  --accent-soft: rgba(30, 229, 110, 0.14); /* verde translúcido para fondos suaves en oscuro */
+
+  --accent-2: #f0b94d; /* acento secundario más claro para modo oscuro */
+  --accent-2-soft: rgba(240, 185, 77, 0.16); /* versión translúcida */
+
+  --danger: #ff6b6b; /* rojo más claro, legible sobre fondo oscuro */
+  --danger-soft: rgba(255, 107, 107, 0.14); /* versión translúcida */
+
+  --shadow: 0 18px 40px -20px rgba(0, 0, 0, 0.6); /* sombra más marcada, porque el fondo oscuro la disimula */
+  color-scheme: dark; /* le avisa al navegador que este estado es de tema oscuro */
+}
+
+/* ------------------------------------------------------------
+   2. RESET mínimo
+   ------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* el padding y el borde se descuentan del ancho, no se suman */
+}
+
+html {
+  scroll-behavior: smooth; /* el scroll con anclas (#id) se desliza suave en vez de saltar */
+}
+
+body {
+  margin: 0; /* saca el margen por defecto del navegador */
+  background: var(--bg); /* fondo según el tema actual (claro u oscuro) */
+  color: var(--ink); /* color de texto según el tema actual */
+  font-family: var(--font-body); /* tipografía base para todo el texto */
+  font-size: 1.06rem; /* tamaño de fuente base, un poco más grande que el default */
+  line-height: var(--lh-body); /* interlineado cómodo para lectura */
+  -webkit-font-smoothing: antialiased; /* suaviza el renderizado de fuentes en navegadores WebKit */
+  transition: background-color 0.25s ease, color 0.25s ease; /* anima el cambio de color al alternar el tema */
+}
+
+img {
+  max-width: 100%; /* ninguna imagen desborda el ancho de su contenedor */
+  display: block; /* saca el espacio fantasma que dejan las imágenes inline */
+}
+
+a {
+  color: inherit; /* los links toman el color del texto que los rodea, no el azul por defecto */
+}
+
+ul {
+  margin: 0; /* saca el margen por defecto de las listas */
+  padding: 0; /* saca el padding por defecto (donde vivían las viñetas) */
+  list-style: none; /* saca las viñetas, porque el diseño no las usa */
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display); /* los títulos usan la tipografía de display, no la de párrafo */
+  line-height: var(--lh-tight); /* interlineado más ajustado para bloques de texto grande */
+  margin: 0 0 0.5em; /* solo margen abajo, para controlar el espaciado a mano */
+  font-weight: 700; /* negrita por defecto en todos los niveles de título */
+}
+
+p {
+  margin: 0 0 1.1em; /* separación estándar entre párrafos */
+}
+
+@media (prefers-reduced-motion: reduce) { /* si el usuario pidió "reducir movimiento" en su sistema operativo */
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important; /* casi anula cualquier animación */
+    transition-duration: 0.001ms !important; /* casi anula cualquier transición */
+    scroll-behavior: auto !important; /* saca el scroll suave */
+  }
+}
+
+/* ------------------------------------------------------------
+   3. UTILIDADES
+   ------------------------------------------------------------ */
+.eyebrow { /* etiqueta chica arriba de un título, tipo "// sección" */
+  display: inline-block; /* permite márgenes aunque el contenido sea texto corto */
+  font-family: var(--font-mono); /* tipografía de código, para el efecto "comentario" */
+  font-size: 0.82rem; /* tamaño chico, de etiqueta */
+  letter-spacing: var(--ls-wide); /* letras más separadas, look técnico */
+  color: var(--accent); /* color de marca */
+  margin-bottom: 0.9em; /* separación respecto del título que sigue */
+}
+
+.eyebrow::before {
+  content: "// "; /* agrega el "//" como si fuera un comentario de código, sin tocar el HTML */
+  color: var(--ink-soft); /* el "//" un poco más apagado que el texto */
+}
+
+.skip-link { /* link de accesibilidad para saltar directo al contenido */
+  position: absolute; /* se saca del flujo normal para poder esconderlo fuera de pantalla */
+  left: -999px; /* oculto fuera de la pantalla mientras no tiene foco */
+  top: 0;
+  background: var(--accent); /* bien visible cuando aparece */
+  color: var(--accent-ink); /* contraste correcto sobre el fondo de acento */
+  padding: 0.75em 1.2em; /* área cómoda para hacer click/tap */
+  font-family: var(--font-mono); /* combina con el resto de las etiquetas técnicas */
+  font-size: 0.9rem;
+  z-index: 100; /* queda por encima de todo lo demás cuando aparece */
+  border-radius: 0 0 6px 0; /* esquina redondeada solo abajo a la derecha */
+}
+
+.skip-link:focus {
+  left: 0; /* al recibir foco con Tab, entra a la pantalla y se hace visible */
+}
+
+.visually-hidden { /* oculta contenido visualmente sin sacarlo del árbol de accesibilidad */
+  position: absolute;
+  width: 1px; /* prácticamente sin tamaño... */
+  height: 1px;
+  overflow: hidden; /* ...y lo que sobra se recorta */
+  clip: rect(0 0 0 0); /* técnica clásica para ocultar sin usar display:none (que sí lo saca del lector de pantalla) */
+  white-space: nowrap; /* evita que el texto se corte y agrande el elemento */
+}
+
+/* ------------------------------------------------------------
+   4. LOGO / CURSOR TITILANTE
+   ------------------------------------------------------------ */
+.logo {
+  font-family: var(--font-display); /* tipografía de marca */
+  font-size: 1.6rem;
+  font-weight: 800; /* bien grueso, para que funcione como isotipo */
+  color: var(--ink);
+  letter-spacing: 1px; /* un poco de aire entre letras */
+  margin: 0; /* el logo vive dentro de un <p>, se le saca el margen por defecto */
+  text-decoration: none; /* saca el subrayado de link por defecto */
+  display: inline-flex; /* permite alinear letra + cursor prolijamente */
+  align-items: baseline; /* alinea el cursor con la base del texto, no con el centro */
+}
+
+
+.slash {
+  color: var(--accent); /* la barra "/\" del logo en verde, para que resalte */
+}
+
+.cursor { /* el rectángulo verde que titila como cursor de terminal */
+  display: inline-block; /* para poder darle ancho y alto */
+  width: 9px;
+  height: 0.85rem;
+  margin-left: 5px; /* separación respecto de la "W" */
+  background: var(--accent);
+  animation: blink 0.9s infinite; /* aplica la animación de titileo definida abajo, en loop infinito */
+}
+
+@keyframes blink { /* define los fotogramas de la animación "blink" */
+  0%, 49% { opacity: 1; } /* visible durante la primera mitad del ciclo */
+  50%, 100% { opacity: 0; } /* invisible durante la segunda mitad -> efecto de parpadeo */
+}
+
+/* ------------------------------------------------------------
+   5. HEADER + NAV (Flexbox)
+   ------------------------------------------------------------ */
+.site-header {
+  position: sticky; /* el header queda pegado arriba al hacer scroll */
+  top: 0; /* se pega justo en el borde superior de la ventana */
+  z-index: 20; /* queda por encima del contenido que pasa por debajo */
+  background: color-mix(in srgb, var(--bg) 88%, transparent); /* fondo semi-transparente mezclando el color de fondo con transparencia */
+  backdrop-filter: blur(10px); /* desenfoca lo que se ve detrás del header al hacer scroll */
+  border-bottom: 1px solid var(--line); /* línea fina que separa el header del contenido */
+}
+
+.header-inner {
+  max-width: var(--content-max); /* no se estira más allá del ancho máximo del sitio */
+  margin: 0 auto; /* centra el bloque horizontalmente */
+  padding: 1rem 1.5rem; /* aire interno arriba/abajo y a los costados */
+  display: flex; /* logo, nav y botón en fila */
+  align-items: center; /* centrados verticalmente entre sí */
+  justify-content: space-between; /* logo pegado a la izquierda, botón pegado a la derecha */
+  gap: 1.5rem; /* separación mínima entre los 3 bloques */
+}
+
+.main-nav ul {
+  display: flex; /* los <li> quedan en fila en vez de apilados */
+  align-items: center; /* centrados verticalmente */
+  gap: 1.9rem; /* separación entre cada link del menú */
+  font-family: var(--font-mono); /* tipografía técnica para el menú */
+  font-size: 0.92rem;
+}
+
+.main-nav a {
+  text-decoration: none; /* sin subrayado */
+  color: var(--ink-soft); /* color apagado cuando el link no está activo ni en hover */
+  padding: 0.3em 0.1em; /* aire para que el área de click sea más grande */
+  border-bottom: 2px solid transparent; /* reserva el espacio del subrayado, aunque no se vea (evita que "salte" el layout) */
+  transition: color 0.2s ease, border-color 0.2s ease; /* anima el cambio de color y del subrayado */
+}
+
+.main-nav a:hover,
+.main-nav a:focus-visible {
+  color: var(--ink); /* se oscurece/aclara al pasar el mouse o enfocar con teclado */
+  border-color: var(--accent); /* aparece el subrayado verde */
+}
+
+.main-nav a[aria-current="page"] { /* selecciona el link que tiene aria-current="page" (la página activa) */
+  color: var(--ink); /* mismo estilo que el hover, pero fijo */
+  border-color: var(--accent); /* subrayado verde permanente en la página en la que estás parado */
+}
+
+.header-actions {
+  display: flex; /* alinea lo que haya del lado derecho del header (el botón de tema) */
+  align-items: center;
+  gap: 1rem;
+}
+
+.theme-toggle { /* botón de modo claro/oscuro */
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  background: var(--surface); /* mismo tono que otras superficies (tarjetas) */
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 999px; /* valor bien alto -> forma de píldora */
+  padding: 0.5em 1em;
+  cursor: pointer; /* el mouse indica que es clickeable */
+  transition: border-color 0.2s ease, transform 0.15s ease, background 0.2s ease; /* anima hover y click */
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent); /* el borde se pone verde al pasar el mouse */
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent); /* contorno visible al navegar con teclado (Tab) */
+  outline-offset: 2px; /* separa el contorno del borde del botón, para que no se pisen */
+}
+
+.theme-toggle:active {
+  transform: scale(0.96); /* se achica un poquito al hacer click, feedback táctil */
+}
+
+/* ------------------------------------------------------------
+   6. BOTONES
+   ------------------------------------------------------------ */
+.btn { /* estilos base compartidos por cualquier botón/link con pinta de botón */
+  display: inline-block; /* para poder darle padding sin romper el flujo del texto */
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  text-decoration: none; /* por si el botón es en realidad un <a> */
+  padding: 0.85em 1.5em; /* área cómoda de click */
+  border-radius: 8px;
+  border: 1px solid transparent; /* reserva el espacio del borde aunque no se vea (para btn-primary) */
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; /* anima todos los estados */
+}
+
+.btn-primary { /* variante sólida, de mayor jerarquía visual */
+  background: var(--accent);
+  color: var(--accent-ink); /* texto oscuro sobre el fondo verde, para contraste */
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  box-shadow: var(--shadow); /* sombra que le da sensación de "elevación" */
+  transform: translateY(-2px); /* se levanta 2px al pasar el mouse */
+}
+
+.btn-primary:active {
+  transform: translateY(0); /* vuelve a su posición original al hacer click, simula que se "hunde" */
+}
+
+.btn-ghost { /* variante secundaria, solo contorno */
+  background: transparent; /* sin relleno */
+  color: var(--ink);
+  border-color: var(--line); /* borde sutil en vez de fondo sólido */
+}
+
+.btn-ghost:hover,
+.btn-ghost:focus-visible {
+  border-color: var(--accent); /* el borde se pone verde */
+  color: var(--accent); /* el texto también toma el color de acento */
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent); /* mismo tratamiento de foco que el resto de los controles */
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------
+   7. LAYOUT — contenedor general y grid de páginas internas
+   (el grid propio del index, .home-grid, vive en home.css)
+   ------------------------------------------------------------ */
+.page { /* contenedor genérico que centra el contenido y le pone márgenes laterales */
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.layout-grid { /* estructura de 2 columnas para las páginas internas */
+  display: grid; /* activa CSS Grid en este contenedor */
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 300px); /* columna principal flexible + aside de ancho acotado */
+  gap: 3.5rem; /* separación entre columna principal y aside */
+  padding-block: 3rem 5rem; /* espacio arriba y (más) abajo del bloque */
+  align-items: start; /* cada columna respeta su propia altura, no se estiran para igualarse */
+}
+
+.layout-grid > aside { /* solo el <aside> hijo directo del grid (no cualquier aside anidado) */
+  position: sticky; /* se queda "pegado" en pantalla mientras el resto hace scroll */
+  top: 6.5rem; /* a qué distancia del borde superior se pega (debajo del header) */
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.6rem;
+  background: var(--surface);
+}
+
+.layout-grid > aside h2 {
+  font-size: 1.05rem; /* título del aside, más chico que un h2 normal de la página */
+}
+
+/* Encabezado de página interna (título + bajada): quienes-somos, contacto y proyectos */
+.page-hero {
+  padding-block: 2.6rem 0.5rem; /* aire arriba, poco abajo (porque después viene el borde) */
+  border-bottom: 1px solid var(--line); /* separa el encabezado del resto del contenido */
+}
+
+.page-hero h1 {
+  font-size: clamp(2rem, 4vw, 2.7rem); /* tamaño fluido: nunca menor a 2rem ni mayor a 2.7rem */
+}
+
+.page-hero .lede { /* el párrafo de bajada debajo del h1 */
+  color: var(--ink-soft); /* más apagado que el título */
+  max-width: 62ch; /* ancho máximo en "caracteres", para que no se estire de más en pantallas anchas */
+  font-size: 1.05rem;
+}
+
+/* Lista de tags en Flexbox: aparece en el aside de quienes-somos y de proyectos */
+.tag-list {
+  display: flex; /* los <li> quedan en fila */
+  flex-wrap: wrap; /* si no entran todos, bajan de línea */
+  gap: 0.6rem; /* separación entre tags */
+}
+
+.tag-list li { /* cada tag individual, con pinta de "chip" */
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  background: var(--accent-soft); /* fondo verde bien suave */
+  color: var(--ink);
+  border: 1px solid var(--line);
+  padding: 0.4em 0.8em;
+  border-radius: 999px; /* forma de píldora */
+}
+
+/* ------------------------------------------------------------
+   8. FOOTER
+   ------------------------------------------------------------ */
+.site-footer {
+  border-top: 1px solid var(--line); /* separa el footer del contenido de arriba */
+  margin-top: 3rem; /* empuja el footer lejos del último bloque de contenido */
+}
+
+.footer-inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 2.6rem 1.5rem 3rem;
+  display: flex; /* marca a la izquierda, columnas de links a la derecha */
+  flex-wrap: wrap; /* en pantallas chicas, los bloques bajan de línea */
+  justify-content: space-between; /* separa marca y nav a los extremos */
+  gap: 2rem; /* separación mínima si el wrap los junta */
+}
+
+.footer-brand .logo { /* el logo del footer se repite más chico que el del header; antes vivía como style="" inline */
+  font-size: 1.3rem;
+}
+
+.footer-brand p {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  max-width: 32ch; /* corta el texto para que no se estire en una sola línea larga */
+  margin-top: 0.5rem;
+}
+
+.footer-nav {
+  display: flex; /* las columnas "Sitio" y "Validación W3C" quedan una al lado de la otra */
+  gap: 2.5rem;
+  flex-wrap: wrap; /* bajan de línea si no entran */
+}
+
+.footer-col h2 { /* título chico de cada columna del footer ("SITIO", "VALIDACIÓN W3C") */
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: var(--ls-wide);
+  color: var(--ink-soft); /* apagado, es solo una etiqueta de categoría */
+  margin-bottom: 0.8em;
+  font-weight: 400; /* sin negrita, para que no compita con el contenido */
+  text-transform: uppercase; /* siempre en mayúsculas, sea como sea que esté escrito en el HTML */
+}
+
+.footer-col ul {
+  display: flex;
+  flex-direction: column; /* los links de cada columna quedan apilados verticalmente */
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.footer-col a {
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.footer-col a:hover,
+.footer-col a:focus-visible {
+  color: var(--accent); /* se pone verde al pasar el mouse o enfocar */
+}
+
+.w3c-badges {
+  display: flex; /* los 2 logitos (HTML5 y CSS) quedan en fila */
+  gap: 0.7rem;
+  align-items: center;
+}
+
+.w3c-badges img {
+  height: 31px; /* alto fijo, tamaño oficial de los badges del W3C */
+  width: auto; /* el ancho se ajusta solo, para no deformar el logo */
+  filter: grayscale(1) opacity(0.7); /* en blanco y negro y semi-transparente por defecto, más discreto */
+  transition: filter 0.2s ease; /* anima el cambio de filtro */
+}
+
+.w3c-badges a:hover img,
+.w3c-badges a:focus-visible img {
+  filter: none; /* recupera el color completo al pasar el mouse o enfocar */
+}
+
+.footer-bottom { /* franja final con el copyright */
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 1.4rem 1.5rem 2rem;
+  border-top: 1px solid var(--line); /* separa esta franja del resto del footer */
+  display: flex;
+  justify-content: space-between; /* copyright a la izquierda, "UPS..." a la derecha */
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+/* ------------------------------------------------------------
+   9. RESPONSIVE — piezas compartidas (nav, footer, layout interno)
+   ------------------------------------------------------------ */
+@media (max-width: 900px) { /* se aplica en pantallas de 900px de ancho o menos (tablets) */
+  .layout-grid {
+    grid-template-columns: 1fr; /* pasa de 2 columnas a 1 sola, todo apilado */
+  }
+
+  .layout-grid > aside {
+    position: static; /* deja de quedar pegado al hacer scroll (ya no hace falta con todo apilado) */
+    order: 2; /* el aside pasa a mostrarse después del contenido principal, no antes */
+  }
+}
+
+@media (max-width: 640px) { /* se aplica en pantallas de 640px o menos (celulares) */
+  .main-nav ul {
+    gap: 1.1rem; /* menos separación entre links, para que entren en pantallas chicas */
+    font-size: 0.82rem; /* letra más chica */
+  }
+
+  .footer-inner {
+    flex-direction: column; /* marca y navegación quedan apiladas en vez de lado a lado */
+  }
+}

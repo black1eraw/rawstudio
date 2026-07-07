@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"> <!-- codificación de caracteres, necesaria para tildes y ñ -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- obligatoria para que el sitio se vea estable en celulares y tablets -->
+  <meta name="description" content="Raw Studio construye sitios web rápidos y accesibles con HTML, CSS y JavaScript nativos, sin frameworks de por medio."> <!-- descripción que usan los buscadores en los resultados -->
+  <meta name="robots" content="index, follow"> <!-- le dice a los buscadores que indexen esta página y sigan sus links -->
+  <meta name="keywords" content="desarrollo web,diseño web,accesibilidad,html5"> <!-- palabras clave asociadas a la página -->
+  <meta name="author" content="Raw Studio"> <!-- autor del documento -->
+  <title>Raw Studio — Desarrollo web</title> <!-- texto que aparece en la pestaña del navegador -->
+
+  <!-- Precarga de conexión a Google Fonts para que las fuentes externas carguen más rápido -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Tipografías externas: Space Grotesk (títulos), Source Serif 4 (cuerpo), JetBrains Mono (etiquetas/código) -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css"> <!-- Este CSS lo comparten todas las páginas para no repetir el mismo código en cada una -->
+  <link rel="stylesheet" href="css/index.css"> <!-- Este CSS es exclusivo de esta página (hero, servicios, features, CTA) -->
+</head>
+<body>
+
+  <!-- Skip link: permite saltar directo al contenido con el teclado, sin pasar por todo el menú -->
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- HEADER: encabezado presente en las 4 páginas, con logo, navegación y botón de tema -->
+  <header class="site-header">
+  <div class="header-inner"> 
+    <!-- Esto es para tocar el logo y volverte a la pagina principal-->
+     <!-- El logo NO es un <h1>: cada página define su propio h1 más abajo -->
+    <a href="index.html" class="logo" aria-label="Raw Studio, inicio">R<span class="slash">/\</span>W<span class="cursor" aria-hidden="true"></span></a>
+
+      <!-- <nav> semántico con aria-label propio porque hay más de un <nav> en la página (este y el del footer) -->
+    <nav class="main-nav" aria-label="Navegación principal">
+      <ul> 
+        <li><a href="index.html" aria-current="page">Inicio</a></li><!-- aria-current="page" le indica a lectores de pantalla en qué página estamos parados -->
+        <li><a href="quienes-somos.html">Quiénes somos</a></li>
+        <li><a href="proyectos.html">Proyectos</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions"> <!-- contenedor del botón de tema, por si mañana se agrega algo más al lado -->
+        <!-- Botón de modo claro/oscuro. aria-pressed y aria-label los actualiza js/theme.js en cada click -->
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Cambiar a modo oscuro">
+        ☾ Modo oscuro
+      </button>
+    </div>
+  </div>
+</header>
+  
+  <!-- <main> único por página: contiene el contenido central, es el destino del skip-link -->
+  <main id="contenido">
+
+    <!-- .home-grid: layout Grid de una sola columna y ancho completo (index NO lleva aside, según consigna) -->
+    <div class="page home-grid">
+
+      <!-- HERO: sección de apertura. Es un <section> con Grid interno de 2 columnas (texto | panel de código).
+           aria-label explícito (no aria-labelledby al h1) porque el h1 es un eslogan ("El código habla...") y no
+           describe qué es la región; un lector de pantalla necesita un nombre que explique la sección, no la frase de marketing. -->
+      <section class="hero" aria-label="Presentación principal">
+        <div class="hero-copy"> <!-- columna izquierda del hero: texto y botones -->
+          <p class="eyebrow">Creamos · para todos · sin excepciones</p> <!-- etiqueta chica arriba del título -->
+          <!-- h1: único encabezado de nivel 1 de esta página -->
+          <h1 class="hero-title">El código habla,<span class="hl">El diseño acompaña.</span></h1>
+          <p class="hero-lede"> <!-- párrafo de bajada, resume la propuesta del estudio -->
+            DISEÑAMOS PARA PERSONAS, PROGRAMAMOS PARA EL RENDIMIENTO.
+            Construimos experiencias rápidas, accesibles y hechas para durar.
+          </p>
+          <!-- .hero-actions: Flexbox para alinear los dos botones en fila -->
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="contacto.html">Empezar un proyecto</a> <!-- botón principal, mayor jerarquía visual -->
+            <a class="btn btn-ghost" href="proyectos.html">Ver proyectos</a> <!-- botón secundario, solo contorno -->
+          </div>
+        </div>
+        <!-- Panel decorativo tipo "editor de código". aria-hidden porque es puramente visual, no aporta información -->
+        <div class="hero-panel" aria-hidden="true">
+          <div class="dot-row"> <!-- fila de puntitos, como los botones de una ventana -->
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </div>
+          <pre><span class="tok-tag">&lt;section</span> <span class="tok-attr">class</span>=<span class="tok-str">"R/\W"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;h2&gt;</span>Diseñamos para personas<span class="tok-tag">&lt;/h2&gt;</span>
+  <span class="tok-tag">&lt;p&gt;</span>El código habla<span class="tok-tag">&lt;/p&gt;</span>
+<span class="tok-tag">&lt;/section&gt;</span></pre>
+<!--<pre>sirve para mostrar texto con formato predefinido, respetando exactamente los espacios, saltos de línea y tabulaciones que tiene en el código fuente.-->
+        </div>
+      </section>
+
+      <!-- SERVICIOS: .services-grid usa CSS Grid de 3 columnas (repeat(3, 1fr)).
+           aria-label explícito con el texto del eyebrow: el h2 es una frase larga, "qué hacemos" es el nombre
+           corto y descriptivo que un lector de pantalla necesita al navegar por regiones. -->
+      <section aria-label="Qué hacemos">
+        <div class="section-head"> <!-- eyebrow + h2 de la sección -->
+          <p class="eyebrow">qué hacemos</p>
+          <h2>Somos un estudio de desarrollo web, enfocado en lo esencial</h2>
+        </div>
+        <div class="services-grid">
+          <!-- Cada <article> es contenido independiente y autocontenido: por eso no es un simple <div> -->
+          <article class="service-card">
+            <p class="num">01</p> <!-- numerito decorativo de la tarjeta -->
+            <h3>Sitios institucionales</h3>
+            <p>Páginas multi-sección con jerarquía clara, pensadas para que la información se encuentre en dos clics.</p>
+          </article>
+          <article class="service-card">
+            <p class="num">02</p>
+            <h3>Accesibilidad real</h3>
+            <p>¿Puede usar tu sitio una persona con discapacidad visual?
+               ¿Y alguien que navega solo con el teclado?
+               Nosotros diseñamos pensando en ambos.</p>
+          </article>
+          <article class="service-card">
+            <p class="num">03</p>
+            <h3>Formularios y contacto</h3>
+            <p>Validación nativa de HTML5, mensajes de error claros y campos que cualquier lector de pantalla entiende.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- POR QUÉ NOSOTROS: .features-row usa Flexbox con wrap, para que las 3 tarjetas se acomoden solas.
+           aria-label explícito (mismo criterio que en la sección de servicios): el h2 es un eslogan,
+           el eyebrow es el nombre corto que describe la región. -->
+      <section aria-label="Por qué código nativo">
+        <div class="section-head">
+          <p class="eyebrow">por qué código nativo</p>
+          <h2>Menos capas, menos cosas que se rompen</h2>
+        </div>
+        <div class="features-row">
+          <div class="feature-pill"> <!-- tarjeta: ícono + título + texto -->
+            <!-- Ícono puramente decorativo -> aria-hidden -->
+            <span class="mark" aria-hidden="true">◆</span>
+            <div>
+              <h3>Carga rápida</h3>
+              <p>Sin librerías de terceros que descargar antes de mostrar una línea de contenido.</p>
+            </div>
+          </div>
+          <div class="feature-pill">
+            <span class="mark" aria-hidden="true">◆</span>
+            <div>
+              <h3>Fácil de mantener</h3>
+              <p>Cualquier desarrollador puede abrir el código y entenderlo sin aprender un framework nuevo.</p>
+            </div>
+          </div>
+          <div class="feature-pill">
+            <span class="mark" aria-hidden="true">◆</span>
+            <div>
+              <h3>Estándares del W3C</h3>
+              <p>Cada documento se valida antes de publicarse, para que funcione igual en cualquier navegador.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA final: .cta-band usa Flexbox para separar el texto del botón a los extremos.
+           No tiene eyebrow arriba, así que el aria-label describe la función de la región
+           en vez de repetir la pregunta del h2 como nombre de landmark. -->
+      <section class="cta-band" aria-label="Llamado a la acción">
+        <h2>¿Tenés un proyecto en mente?</h2>
+        <a class="btn btn-primary" href="contacto.html">Escribinos</a>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- FOOTER institucional: se repite igual en las 4 páginas -->
+  <footer class="site-footer">
+    <!-- .footer-inner: Flexbox con justify-content: space-between para separar marca y navegación -->
+    <div class="footer-inner">
+      <div class="footer-brand"> <!-- logo chico + descripción corta del estudio -->
+        <p class="logo">R<span class="slash">/\</span>W</p>
+        <p>Desarrollo web</p>
+      </div>
+      <!-- Segundo <nav> de la página: por eso necesita su propio aria-label distinto al de arriba -->
+      <nav class="footer-nav" aria-label="Navegación del pie de página">
+        <div class="footer-col"> <!-- columna "Sitio", con los links a las 4 páginas -->
+          <h2>Sitio</h2>
+          <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="quienes-somos.html">Quiénes somos</a></li>
+            <li><a href="proyectos.html">Proyectos</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-col"> <!-- columna "Validación W3C", con los badges -->
+          <h2>Validación W3C</h2>
+          <!-- Badges oficiales del W3C: certifican que el HTML y el CSS pasan la validación -->
+          <div class="w3c-badges">
+            <a href="https://validator.w3.org/check?uri=referer" title="Validar HTML de esta página">
+              <img src="https://www.w3.org/Icons/valid-html401" alt="Válido HTML5" width="42" height="31">
+            </a>
+            <a href="https://jigsaw.w3.org/css-validator/check/referer" title="Validar CSS de esta página">
+              <img src="https://jigsaw.w3.org/css-validator/images/vcss" alt="CSS Válido" width="42" height="31">
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom"> <!-- franja final, debajo de la línea divisoria -->
+      <p>© 2026 Raw Studio.</p>
+      
+    </div>
+  </footer>
+
+  <!-- Script al final del body: se carga después del contenido, no bloquea el renderizado -->
+  <script src="js/theme.js"></script>
+</body>
+</html>
