@@ -99,6 +99,12 @@
   margin-top: 1rem;
 }
 
+/* Le saca el subrayado a los links que estén dentro de las etiquetas */
+.tag-list a {
+  text-decoration: none;
+  color: inherit; /* Opcional: hace que el texto tome el color del <li> en vez de quedar azul */
+}
+
 /* ------------------------------------------------------------
    RESPONSIVE
    ------------------------------------------------------------ */
