@@ -183,7 +183,7 @@
   align-items: center; /* centrados verticalmente entre sí */
   gap: 2rem; /* separación mínima si el espacio es chico */
   background: var(--ink); /* fondo oscuro fijo, contraste fuerte con el resto de la página clara */
-  color: var(--bg1); /* texto claro, invertido respecto del resto del sitio */
+  color: var(--bg); /* texto claro, invertido respecto del resto del sitio */
   border-radius: var(--radius);
   padding: 2.4rem 2.6rem;
   flex-wrap: wrap; /* en pantallas chicas, el botón puede bajar de línea */
@@ -197,7 +197,7 @@ body.dark-mode .cta-band { /* ajuste especial para cuando el sitio entero ya est
 .cta-band h2 {
   margin: 0;
   font-size: 1.5rem;
-  color: inherit; /* toma el color claro definido en .cta-band, no el color de texto general del sitio */
+  color:#f6f4ef; /* no toma el color claro definido en .cta-band*/
 }
 
 .cta-band .btn-primary {
