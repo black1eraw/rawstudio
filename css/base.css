@@ -510,3 +510,23 @@ p {
     flex-direction: column; /* marca y navegación quedan apiladas en vez de lado a lado */
   }
 }
+
+/* CELULARES MODERNOS ESTÁNDAR (430px o menos - Ej: iPhone, Galaxy S) */
+@media (max-width: 430px) {
+  .main-nav ul {
+    /* Si tenés muchos links, el flex-wrap hace que el header ocupe media pantalla.
+       Alternativa moderna: Scroll horizontal suave. */
+    flex-wrap: nowrap;
+    overflow-x: auto; /* Habilita scroll horizontal solo en el menú */
+    justify-content: flex-start;
+    padding-bottom: 0.5rem; /* Espacio para que no corte la sombra o borde */
+    
+    /* Oculta la barra de scroll en navegadores webkit para que quede más limpio */
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+  }
+  
+  .main-nav ul::-webkit-scrollbar { 
+    display: none; 
+  }
+}
