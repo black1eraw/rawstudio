@@ -12,7 +12,6 @@
    ------------------------------------------------------------ */
 :root { /* variables globales, disponibles en todo el documento */
   --bg: #f6f4ef; /* color de fondo general del sitio (modo claro) */
-  --bg1: #ffffff; /* color de fondo general del sitio (modo claro) */
   --surface: #ffffff; /* color de fondo de tarjetas, inputs, header */
   --surface-raised: #f3eeee; /* fondo de elementos "elevados" (ej. cta-band en oscuro) */
   --ink: #0c0c0f; /* color principal de texto */
